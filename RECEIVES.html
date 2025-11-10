@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Transfers and Receives</title>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <!--<img src="Receives and" alt="logo">-->
+            <div>
+                <h2> Love Home Mart</h2>
+                <p>Love home, Love life</p>
+                <h2> TRACKING TRANSFERS & RECEIVES</h2>
+            </div>
+        </header>
+        <div class="row">
+            <label> Transcation Type:</label>
+            <select>
+                <option>Transfer</option>
+                <option>Receives</option>
+            </select>
+        </div>
+        <div class="row">
+            <label>Date:</label>
+            <input type="date" id="date">
+        </div>
+        <div class="row">
+            <label>From:</label>
+            <select>
+                <option>City Mall Nyali</option>
+                <option> Rossly Riviera </option>
+                <option>Diamond Plaza 2</option>
+            </select>
+            <label style="margin-left: 40px;">To:</label>
+            <select>
+                 <option>City Mall Nyali</option>
+                <option> Rossly Riviera </option>
+                <option>Diamond Plaza 2</option>
+            </select>
+        </div>
+        <table id="ItemsTable">
+            <tr>
+                <th>Item Code</th>
+                <th>Items</th>
+                <th>Qty</th>
+                <th>Price</th>
+                <th>Approved</th>
+            </tr>
+            <tr>
+                <td><input type="number"></td>
+                <td><input type="text"></td>
+                <td><input type="number"></td>
+                <td><input type="number"></td>
+                <td><input type="checkbox"></td>
+            </tr>
+        </table>
+        <button class="add-row-btn" onclick="addrow()">add row</button>
+        <div class="row">
+            <label>Summary</label>
+            <textarea class="summary-area"></textarea>
+        </div>
+        <div class="share-section">
+            <label>Share via:</label><br>
+            <input type="checkbox">Email.
+            <input type="checkbox">Whatapp.
+            <input type="checkbox">Telegram.
+        </div>
+    </div>
+    <script>
+        documentgetElemenById('date').valueAsDate = newDate();
+        function addrow(){
+            const table = documentgetElemenById('Items Table');
+            const row = table.insertrow(-1);
+
+            row.innerHTML=
+           
+
+
+        }
+    </script>
+
+</body>
+</html>
