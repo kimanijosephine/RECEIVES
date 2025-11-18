@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Log In Form </title>
+        <style>
+          body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: skyblue; /* sky blue background */
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            background: #f5f5f5; /* greyish box */
+            padding: 30px;
+            width: 350px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #444;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            background: #fafafa;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: blue; /* blue button */
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #555;
+        }
+        .forgot-link a {
+                color: #4a90e2; /* Button blue */
+                text-decoration: none;
+                font-weight: normal;
+            }
+            .forgot-link a:hover {
+                text-decoration: underline;
+            }
+            .forgot-link {
+                display: block;
+                text-align: right;
+                margin-top: -15px; /* Pull it up closer to the input field */
+                margin-bottom: 20px;
+                font-size: 14px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h2>Log In</h2>
+            <form>
+                <label>Email Address</label>
+                <input type="email" placeholder="Enter your email" required>
+
+                <label>Password</label>
+                <input type="password" placeholder="Enter password" required>
+                <p class="forgot-link">
+                    <a href="forgot_password.html">Forgot Password?</a>
+                </p>
+
+                <button type="submit">Log In</button>
+            </form>
+
+            <p class="login-link">
+                Don't have an account? <a href="signup.html">Sign Up here</a>
+            </p>
+        </div>
+    </body>
+</html>
