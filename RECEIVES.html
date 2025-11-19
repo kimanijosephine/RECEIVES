@@ -2,9 +2,192 @@
 <html>
 <head>
     <title>Transfers and Receives</title>
-     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Reset default spacing */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Body styling */
+body {
+    background-color: #f2f2f2; /* soft grey */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 40px 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Main container */
+.container {
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    width: 70%;
+    max-width: 900px;
+}
+
+/* Header */
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+header h2 {
+    color: #333;
+}
+header p {
+    font-style: italic;
+    color: #666;
+}
+
+/* Rows */
+.row {
+    margin: 15px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Inputs & Selects */
+input[type="text"],
+input[type="number"],
+input[type="date"],
+select,
+textarea {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 45%;
+}
+
+textarea.summary-area {
+    width: 100%;
+    height: 80px;
+    resize: none;
+}
+
+/* Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+table th {
+    background-color: #eaeaea;
+}
+
+/* Button */
+.add-row-btn {
+    margin-top: 10px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.delete-row-btn {
+    margin-top: 10px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.add-row-btn:hover {
+    background-color: blue;
+}
+.delete-row-btn:hover {
+    background-color:blue;
+}
+
+/* Share Section */
+.share-section {
+    margin-top: 20px;
+}
+.share-section label {
+    font-weight: bold;
+}
+.summary-btn {
+    padding: 10px 20px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.summary-btn:hover {
+    background: #1e7e34;
+}
+
+/* Modal background */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+}
+
+/* Modal box */
+.modal-content {
+    background: white;
+    padding: 20px;
+    width: 80%;
+    max-width: 700px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+}
+
+.modal-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+}
+
+.modal-content table th,
+.modal-content table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+}
+
+.save-btn, .close-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.save-btn {
+    background: #007bff;
+    color: white;
+}
+
+.close-btn {
+    background: #6c757d;
+    color: white;
+}
+    </style>
 </head>
 <body>
+    <form action="save_transfer.php" method="POST">
     <div class="container">
         <header>
             <!--<img src="Receives and" alt="logo">-->
@@ -57,9 +240,22 @@
         </table>
         <button class="add-row-btn" onclick="addrow()">add row</button>
         <div class="row">
-            <label>Summary</label>
-            <textarea class="summary-area"></textarea>
-        </div>
+            <button class="delete-row-btn" onclick="deleterow()">delete row</button>
+        <div class="row">
+            <div class="row">
+    <button class="summary-btn" onclick="openSummary()">View Summary</button>
+</div>
+
+<!-- Modal -->
+<div id="summaryModal" class="modal">
+    <div class="modal-content">
+        <h3>Items Summary</h3>
+        <table id="summaryTable"></table>
+
+        <button class="save-btn" onclick="saveSummary()">Save Changes</button>
+        <button class="close-btn" onclick="closeSummary()">Close</button>
+    </div>
+</div>
         <div class="share-section">
             <label>Share via:</label><br>
             <input type="checkbox">Email.
@@ -81,4 +277,77 @@
     </script>-->
 
 </body>
+<script>
+    // Set the date field to today's date
+    document.getElementById('date').valueAsDate = new Date();
+
+    function addrow() {
+        const table = document.getElementById('ItemsTable');
+        const row = table.insertRow(-1);
+
+        row.innerHTML = `
+            <td><input type="number"></td>
+            <td><input type="text"></td>
+            <td><input type="number"></td>
+            <td><input type="number"></td>
+            <td><input type="checkbox"></td>
+        `;
+    }
+    function deleterow() {
+        const table = document.getElementById('ItemsTable');
+        const row = table.deleteRow(-1);
+
+        row.innerHTML = `
+            <td><input type="number"></td>
+            <td><input type="text"></td>
+            <td><input type="number"></td>
+            <td><input type="number"></td>
+            <td><input type="checkbox"></td>
+        `;
+    }
+    function openSummary() {
+    const originalTable = document.getElementById('ItemsTable');
+    const summaryTable = document.getElementById('summaryTable');
+
+    summaryTable.innerHTML = originalTable.innerHTML; // clone table headers + rows
+
+    // Convert static text into editable inputs in the summary modal
+    const cells = summaryTable.querySelectorAll('td');
+    cells.forEach(cell => {
+        if (cell.children.length === 0) {
+            const text = cell.innerText;
+            cell.innerHTML = `<input type="text" value="${text}">`;
+        }
+    });
+
+    document.getElementById('summaryModal').style.display = 'flex';
+}
+
+function closeSummary() {
+    document.getElementById('summaryModal').style.display = 'none';
+}
+
+function saveSummary() {
+    const originalTable = document.getElementById('ItemsTable');
+    const summaryTable = document.getElementById('summaryTable');
+
+    const originalRows = originalTable.querySelectorAll('tr');
+    const summaryRows = summaryTable.querySelectorAll('tr');
+
+    summaryRows.forEach((row, i) => {
+        if (i === 0) return; // skip header
+
+        const inputs = row.querySelectorAll('input');
+        const originalCells = originalRows[i].querySelectorAll('td');
+
+        inputs.forEach((input, j) => {
+            if (originalCells[j].querySelector('input')) {
+                originalCells[j].querySelector('input').value = input.value;
+            }
+        });
+    });
+
+    closeSummary();
+}
+</script>
 </html>
